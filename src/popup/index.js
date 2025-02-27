@@ -1,3 +1,8 @@
+// import * as Tone from "tone";
+
+console.log("Popup script loaded");
+setupListeners();
+// import * as Tone from "tone";
 let video = document.getElementById("myVideo");
 
 // let pitchShift = audioCtx.createBiquadFilter();
@@ -94,4 +99,23 @@ function setupListeners() {
     .addEventListener("click", () => setPitch(0));
 }
 
-setupListeners();
+// Create HTML element
+const div = document.createElement("div");
+div.innerHTML = `<div
+  style="
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 10px;
+    border: 1px solid black;
+    z-index: 9999;
+    id: injected-html;
+  "
+>
+  Hello from Extension!
+</div>`;
+
+console.log(document.body);
+// Append to the page
+document.body.appendChild(div);
