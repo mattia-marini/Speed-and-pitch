@@ -27,8 +27,13 @@ class DraggableElement {
   mouseMove = (e) => {
     console.log("Mouse MOVE");
     if (this.dragging) {
-      const offsetX = e.clientX - this.initialXInElement;
-      const offsetY = e.clientY - this.initialYInElement;
+      const parentRect = this.element.parentElement.getBoundingClientRect();
+
+      const xInParent = e.clientX - parentRect.left;
+      const yInParent = e.clientY - parentRect.top;
+
+      const offsetX = xInParent - this.initialXInElement;
+      const offsetY = yInParent - this.initialYInElement;
 
       console.log(offsetX, offsetY);
 
@@ -37,7 +42,9 @@ class DraggableElement {
     }
   };
 
-  mouseUp = () => {
+  mouseUp = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     console.log("Mouse UP");
     this.dragging = false;
     this.initialXInElement = null;
@@ -56,6 +63,8 @@ function createDiv(parentElement) {
   div.style.zIndex = "9999";
   div.style.cursor = "move";
   div.innerText = "Draggable element";
+  div.top = "0px";
+  div.left = "0px";
 
   return div;
 }
@@ -65,10 +74,7 @@ function init() {
   mediaElements.forEach((element) => {
     console.log(element);
     let div = createDiv();
-    let boundingRect = element.getBoundingClientRect();
-
-    div.style.top = boundingRect.top + "px";
-    div.style.left = boundingRect.left + "px";
+    let boundingRect = element.parentElement.getBoundingClientRect();
 
     console.log("Bounding rect:");
     console.log(boundingRect);
@@ -78,12 +84,18 @@ function init() {
       // console.log(element.getBoundingClientRect());
     }, 100);
 
-    document.body.appendChild(new DraggableElement(div).element);
+    const draggableElement = new DraggableElement(div).element;
+    console.log("ELEMENT");
+    console.log(draggableElement);
+    element.parentElement.insertBefore(draggableElement, element);
+    // const shadowRoot = element.parentElement.attachShadow({ mode: "open" });
+    // shadowRoot.appendChild(draggableElement);
+
+    // document.body.appendChild(new DraggableElement(div).element);
   });
 }
 
 window.addEventListener("load", () => {
-  console.log("DIO cane");
   init();
 });
 
