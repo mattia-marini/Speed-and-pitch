@@ -18,6 +18,6 @@ module.exports = {
       },
     ],
   },
-  devtool: "source-map", // Generate source maps for debugging
+  // devtool: "source-map", // Generate source maps for debugging
   watch: false, // Set to true to watch files and recompile automatically
 };

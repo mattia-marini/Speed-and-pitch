@@ -16,8 +16,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/popup/index.js"]
+      "js": ["src/content/index.js"]
     }
   ],
-"content_security_policy": "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; object-src 'self'; worker-src 'self' 'wasm-unsafe-eval' 'unsafe-eval';"
+"content_security_policy": "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; object-src 'self'; worker-src 'wasm-unsafe-eval' 'unsafe-eval';"
 }
